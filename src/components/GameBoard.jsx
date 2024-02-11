@@ -6,16 +6,18 @@ const initialGameBoard = [
     [null, null, null],
     [null, null, null],
 ]
-export default function GameBoard(){
+export default function GameBoard({onSelectSquare, activePlayerSymbol}){
     const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
     function handleSelectSquare(rowIndex, colIndex){
         setGameBoard((prevGameBoard) => {
             //New board containing previous board elements
             const updatedBoard = [...prevGameBoard.map((innerArray) => [...innerArray] )];
-            updatedBoard[rowIndex][colIndex] = "X";
+            updatedBoard[rowIndex][colIndex] = activePlayerSymbol;
             return updatedBoard;
         });
+        //This executes handleSelectedSquare from app.js? Maybe just rename it to match?
+        onSelectSquare();
     }
 
     return (
