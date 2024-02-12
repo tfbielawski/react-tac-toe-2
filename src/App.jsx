@@ -27,6 +27,7 @@ function deriveActivePlayer(gameTurns){
 function App() {
   //Manage state in app js to pass to between child components (lifting state)
   const [gameTurns, setGameTurns] = useState([]);
+  const [players, setPlayers] = useState({"X": "Player 1", "O": "Player 2"});
 
   const activePlayer = deriveActivePlayer(gameTurns);
 
@@ -46,7 +47,7 @@ function App() {
     const thirdSquareSymbol = gameBoard[combo[2].row][combo[2].column];
 
     if ((firstSquareSymbol) && (firstSquareSymbol === secondSquareSymbol) && (secondSquareSymbol === thirdSquareSymbol)){
-      winner = firstSquareSymbol;
+      winner = players[firstSquareSymbol];
     }
   }
 
@@ -69,13 +70,32 @@ function App() {
     setGameTurns([]);
   }
 
+  function handlePlayerNames(symbol, newName){
+    setPlayers((prevPlayers) => {
+      return{ 
+        ...prevPlayers,
+        [symbol]:newName
+      }
+    });
+  }
+
   return (
     <main>
       <div id="game-container">
         players
         <ol id="players" className="highlight-player" >
-          <Player initialName="Player 1" symbol="X" isActive={activePlayer === "X"}/>
-          <Player initialName="Player 2" symbol="O" isActive={activePlayer === "O"}/>
+          <Player 
+            initialName="Player 1" 
+            symbol="X" 
+            isActive={activePlayer === "X"}
+            onChangeName={handlePlayerNames}
+          />
+          <Player 
+            initialName="Player 2" 
+            symbol="O" 
+            isActive={activePlayer === "O"}
+            onChangeName={handlePlayerNames}
+          />
         </ol>
         {(winner || isDraw) && <GameOver winner={winner} onRestart={handleRestart}/>}
         <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} />
