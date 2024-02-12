@@ -3,6 +3,7 @@ import React from "react";
 import Player from "./components/Player";
 import GameBoard from "./components/GameBoard";
 import Log from "./components/Log";
+import GameOver from "./components/GameOver";
 import {WINNING_COMBINATIONS} from "./winning-combinations";
 
 //Create the gameboard as a multi-d array
@@ -72,7 +73,7 @@ function App() {
           <Player initialName="Player 1" symbol="X" isActive={activePlayer === "X"}/>
           <Player initialName="Player 2" symbol="O" isActive={activePlayer === "O"}/>
         </ol>
-        {winner && <p>{winner} wins!!</p>}
+        {winner && <GameOver winner={winner}/>}
         <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} />
       </div>
       <Log turns={gameTurns}/>
