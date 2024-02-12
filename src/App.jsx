@@ -10,7 +10,7 @@ function deriveActivePlayer(gameTurns){
   let currentPlayer = "X";
 
   if (gameTurns.length > 0 && gameTurns[0].player === "X"){
-    currentPlayer === "O";
+    currentPlayer = "O";
   }
 
   return currentPlayer;
@@ -24,18 +24,19 @@ function App() {
   const activePlayer = deriveActivePlayer(gameTurns);
 
   function handleSelectSquare(rowIndex, colIndex){
-    //Update state based on current state, use current active player
     // setActivePlayer((curActivePlayer)=> curActivePlayer === "X" ? "O" : "X");
     setGameTurns((prevTurns) => {
       const currentPlayer = deriveActivePlayer(prevTurns);
+      
       const updatedTurns = [
-        {square: {row: rowIndex, col: colIndex}, player: activePlayer},
+        {square: {row: rowIndex, col: colIndex}, player: currentPlayer},
         ...prevTurns,
       ]
 
       return updatedTurns;
     });
   }
+  
 
   return (
     <main>
